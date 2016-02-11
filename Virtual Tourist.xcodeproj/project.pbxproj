@@ -15,6 +15,8 @@
 		EAC2370D1C6C54D8003A71DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAC2370B1C6C54D8003A71DF /* LaunchScreen.storyboard */; };
 		EAC237181C6C54D8003A71DF /* Virtual_TouristTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC237171C6C54D8003A71DF /* Virtual_TouristTests.swift */; };
 		EAC237231C6C54D8003A71DF /* Virtual_TouristUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC237221C6C54D8003A71DF /* Virtual_TouristUITests.swift */; };
+		EAC237311C6C5586003A71DF /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAC237301C6C5586003A71DF /* MapKit.framework */; };
+		EAC237331C6C5662003A71DF /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC237321C6C5662003A71DF /* CoreDataStackManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		EAC2371E1C6C54D8003A71DF /* Virtual TouristUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Virtual TouristUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAC237221C6C54D8003A71DF /* Virtual_TouristUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Virtual_TouristUITests.swift; sourceTree = "<group>"; };
 		EAC237241C6C54D8003A71DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EAC237301C6C5586003A71DF /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		EAC237321C6C5662003A71DF /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAC237311C6C5586003A71DF /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +84,7 @@
 		EAC236F31C6C54D8003A71DF = {
 			isa = PBXGroup;
 			children = (
+				EAC237301C6C5586003A71DF /* MapKit.framework */,
 				EAC236FE1C6C54D8003A71DF /* Virtual Tourist */,
 				EAC237161C6C54D8003A71DF /* Virtual TouristTests */,
 				EAC237211C6C54D8003A71DF /* Virtual TouristUITests */,
@@ -100,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				EAC236FF1C6C54D8003A71DF /* AppDelegate.swift */,
+				EAC237321C6C5662003A71DF /* CoreDataStackManager.swift */,
 				EAC237011C6C54D8003A71DF /* ViewController.swift */,
 				EAC237031C6C54D8003A71DF /* Main.storyboard */,
 				EAC237091C6C54D8003A71DF /* Assets.xcassets */,
@@ -197,6 +204,11 @@
 					EAC236FB1C6C54D8003A71DF = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = L6677SELQ2;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					EAC237121C6C54D8003A71DF = {
 						CreatedOnToolsVersion = 7.2;
@@ -263,6 +275,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAC237021C6C54D8003A71DF /* ViewController.swift in Sources */,
+				EAC237331C6C5662003A71DF /* CoreDataStackManager.swift in Sources */,
 				EAC237081C6C54D8003A71DF /* Virtual_Tourist.xcdatamodeld in Sources */,
 				EAC237001C6C54D8003A71DF /* AppDelegate.swift in Sources */,
 			);
@@ -406,6 +419,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Virtual Tourist/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.udacity.Virtual-Tourist";
@@ -417,6 +431,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "Virtual Tourist/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.udacity.Virtual-Tourist";
