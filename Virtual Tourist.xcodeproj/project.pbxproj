@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA2EE7A91C6C64A60098762A /* MapLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2EE7A81C6C64A60098762A /* MapLocation.swift */; };
 		EAC237001C6C54D8003A71DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC236FF1C6C54D8003A71DF /* AppDelegate.swift */; };
-		EAC237021C6C54D8003A71DF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC237011C6C54D8003A71DF /* ViewController.swift */; };
+		EAC237021C6C54D8003A71DF /* TravelLocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC237011C6C54D8003A71DF /* TravelLocationsViewController.swift */; };
 		EAC237051C6C54D8003A71DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAC237031C6C54D8003A71DF /* Main.storyboard */; };
 		EAC237081C6C54D8003A71DF /* Virtual_Tourist.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EAC237061C6C54D8003A71DF /* Virtual_Tourist.xcdatamodeld */; };
 		EAC2370A1C6C54D8003A71DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAC237091C6C54D8003A71DF /* Assets.xcassets */; };
@@ -37,9 +38,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EA2EE7A81C6C64A60098762A /* MapLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLocation.swift; sourceTree = "<group>"; };
 		EAC236FC1C6C54D8003A71DF /* Virtual Tourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Virtual Tourist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAC236FF1C6C54D8003A71DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EAC237011C6C54D8003A71DF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EAC237011C6C54D8003A71DF /* TravelLocationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelLocationsViewController.swift; sourceTree = "<group>"; };
 		EAC237041C6C54D8003A71DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EAC237071C6C54D8003A71DF /* Virtual_Tourist.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Virtual_Tourist.xcdatamodel; sourceTree = "<group>"; };
 		EAC237091C6C54D8003A71DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -107,8 +109,9 @@
 			children = (
 				EAC236FF1C6C54D8003A71DF /* AppDelegate.swift */,
 				EAC237321C6C5662003A71DF /* CoreDataStackManager.swift */,
-				EAC237011C6C54D8003A71DF /* ViewController.swift */,
+				EAC237011C6C54D8003A71DF /* TravelLocationsViewController.swift */,
 				EAC237031C6C54D8003A71DF /* Main.storyboard */,
+				EA2EE7A81C6C64A60098762A /* MapLocation.swift */,
 				EAC237091C6C54D8003A71DF /* Assets.xcassets */,
 				EAC2370B1C6C54D8003A71DF /* LaunchScreen.storyboard */,
 				EAC2370E1C6C54D8003A71DF /* Info.plist */,
@@ -274,7 +277,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EAC237021C6C54D8003A71DF /* ViewController.swift in Sources */,
+				EAC237021C6C54D8003A71DF /* TravelLocationsViewController.swift in Sources */,
+				EA2EE7A91C6C64A60098762A /* MapLocation.swift in Sources */,
 				EAC237331C6C5662003A71DF /* CoreDataStackManager.swift in Sources */,
 				EAC237081C6C54D8003A71DF /* Virtual_Tourist.xcdatamodeld in Sources */,
 				EAC237001C6C54D8003A71DF /* AppDelegate.swift in Sources */,
@@ -506,6 +510,7 @@
 				EAC237291C6C54D8003A71DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EAC2372A1C6C54D8003A71DF /* Build configuration list for PBXNativeTarget "Virtual TouristTests" */ = {
 			isa = XCConfigurationList;
@@ -514,6 +519,7 @@
 				EAC2372C1C6C54D8003A71DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		EAC2372D1C6C54D8003A71DF /* Build configuration list for PBXNativeTarget "Virtual TouristUITests" */ = {
 			isa = XCConfigurationList;
@@ -522,6 +528,7 @@
 				EAC2372F1C6C54D8003A71DF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
