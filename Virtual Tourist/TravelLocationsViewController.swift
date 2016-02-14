@@ -16,21 +16,37 @@ class TravelLocationsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        saveMapRegion()
+        retrieveMapRegion()
+        
+        // http://stackoverflow.com/questions/29241691/how-do-i-use-uilongpressgesturerecognizer-with-a-uicollectionviewcell-in-swift - Thank you.
+        let gestureRec = UILongPressGestureRecognizer(target: self, action: "addPin:")
+        gestureRec.minimumPressDuration = 0.5
+        mapView.addGestureRecognizer(gestureRec)
     }
 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        saveMapCoordinates()
+        saveMapRegion()
     }
     
     lazy var sharedContext = CoreDataStackManager.sharedInstance().managedObjectContext
     
-    func saveMapCoordinates() {
-        _ = MapLocation(region: mapView.region, context: sharedContext)
+    func addPin(gestureRec: UILongPressGestureRecognizer) {
+        // http://www.myswiftjourney.me/2014/10/23/using-mapkit-mkmapview-how-to-create-a-annotation/ thanks for help
+        let locationOfTap = gestureRec.locationInView(mapView)
+        let coordinates = mapView.convertPoint(locationOfTap, toCoordinateFromView: mapView)
+        
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinates
+        
+        mapView.addAnnotation(annotation)
     }
     
     private func saveMapRegion() {
+        _ = MapLocation(region: mapView.region, context: sharedContext)
+    }
+    
+    private func retrieveMapRegion() {
         
         let fetchRequest = NSFetchRequest()
         let entityDescription = NSEntityDescription.entityForName("MapLocation", inManagedObjectContext: sharedContext)
