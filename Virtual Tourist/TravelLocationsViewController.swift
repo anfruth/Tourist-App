@@ -20,7 +20,6 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
         
         // http://stackoverflow.com/questions/29241691/how-do-i-use-uilongpressgesturerecognizer-with-a-uicollectionviewcell-in-swift - Thank you.
         let gestureRec = UILongPressGestureRecognizer(target: self, action: "addPin:")
-        gestureRec.minimumPressDuration = 0.5
         mapView.addGestureRecognizer(gestureRec)
     }
 
@@ -40,6 +39,7 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
         annotation.coordinate = coordinates
         
         let pin = Pin(coordinates: coordinates, context: sharedContext)
+        
         do {
             try pin.managedObjectContext?.save()
         } catch {
@@ -72,17 +72,20 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         
-        let coordinates = view.annotation!.coordinate
+        let coordinates = (mapView.selectedAnnotations[0] as! MKPointAnnotation).coordinate
+        let latitude = coordinates.latitude as NSNumber
+        let longitude = coordinates.longitude as NSNumber
+
         
         let fetchRequest = NSFetchRequest()
         let entityDescription = NSEntityDescription.entityForName("Pin", inManagedObjectContext: self.sharedContext)
         fetchRequest.entity = entityDescription
         
-//        let latPredicate = NSPredicate(format: "latitude == %@", coordinates.latitude)
-//        let longPredicate = NSPredicate(format: "longitude == %@", coordinates.longitude)
-//        let predicate = NSCompoundPredicate(type: NSCompoundPredicateType.OrPredicateType, subpredicates: [latPredicate, longPredicate])
-//        
-//        fetchRequest.predicate = predicate
+        let latPredicate = NSPredicate(format: "latitude == %@", latitude)
+        let longPredicate = NSPredicate(format: "longitude == %@", longitude)
+        let predicate = NSCompoundPredicate(type: NSCompoundPredicateType.OrPredicateType, subpredicates: [latPredicate, longPredicate])
+        
+        fetchRequest.predicate = predicate
         var pinObject: AnyObject? = nil
         do {
             pinObject = try self.sharedContext.executeFetchRequest(fetchRequest)

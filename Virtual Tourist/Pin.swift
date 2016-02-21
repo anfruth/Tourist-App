@@ -6,15 +6,16 @@
 //  Copyright © 2016 Udacity. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import CoreData
 import MapKit
 
-class Pin : NSManagedObject {
+class Pin : NSManagedObject{
     
     @NSManaged var latitude: NSNumber
     @NSManaged var longitude: NSNumber
     @NSManaged var photos: [Photo]?
+    
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
