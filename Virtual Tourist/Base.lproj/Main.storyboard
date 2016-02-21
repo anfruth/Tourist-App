@@ -20,6 +20,9 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="2Uv-nz-nrf">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="3On-Gc-Cj8"/>
+                                </connections>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -32,11 +35,75 @@
                     </view>
                     <connections>
                         <outlet property="mapView" destination="2Uv-nz-nrf" id="npn-D8-BoI"/>
+                        <segue destination="qC1-Ug-umv" kind="presentation" identifier="showPhotos" id="cWC-qF-8x5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="293" y="425"/>
+            <point key="canvasLocation" x="222" y="434"/>
+        </scene>
+        <!--Photos Collection View Controller-->
+        <scene sceneID="SKx-fc-SmT">
+            <objects>
+                <collectionViewController id="qC1-Ug-umv" customClass="PhotosCollectionViewController" customModule="Virtual_Tourist" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Yyx-dT-gy6">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="DMF-6v-HUg">
+                            <size key="itemSize" width="123" height="113"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCollectionViewCell" id="6Mw-zh-cwd" customClass="PhotosCollectionViewCell" customModule="Virtual_Tourist" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="123" height="113"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="123" height="113"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Mng-LD-wU8">
+                                            <rect key="frame" x="0.0" y="0.0" width="123" height="113"/>
+                                        </imageView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="Mng-LD-wU8" firstAttribute="top" secondItem="6Mw-zh-cwd" secondAttribute="topMargin" constant="4" id="2kX-Nw-7og"/>
+                                    <constraint firstItem="Mng-LD-wU8" firstAttribute="leading" secondItem="6Mw-zh-cwd" secondAttribute="leadingMargin" constant="-8" id="9FF-0h-oMl"/>
+                                    <constraint firstItem="Mng-LD-wU8" firstAttribute="leading" secondItem="6Mw-zh-cwd" secondAttribute="leadingMargin" id="I6b-UO-yva"/>
+                                    <constraint firstItem="Mng-LD-wU8" firstAttribute="top" secondItem="6Mw-zh-cwd" secondAttribute="topMargin" constant="-8" id="W1q-zU-Qpr"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="Mng-LD-wU8" secondAttribute="trailing" constant="-8" id="Xo5-Gz-eW1"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="Mng-LD-wU8" secondAttribute="bottom" constant="-8" id="bYf-im-8YV"/>
+                                    <constraint firstItem="Mng-LD-wU8" firstAttribute="centerY" secondItem="6Mw-zh-cwd" secondAttribute="centerY" id="l0s-rb-XBO"/>
+                                    <constraint firstItem="Mng-LD-wU8" firstAttribute="centerX" secondItem="6Mw-zh-cwd" secondAttribute="centerX" id="maG-cZ-Ii4"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="2kX-Nw-7og"/>
+                                        <exclude reference="I6b-UO-yva"/>
+                                        <exclude reference="l0s-rb-XBO"/>
+                                        <exclude reference="maG-cZ-Ii4"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <outlet property="photo" destination="Mng-LD-wU8" id="xwg-o4-0i6"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="qC1-Ug-umv" id="w1z-Iu-oEE"/>
+                            <outlet property="delegate" destination="qC1-Ug-umv" id="7e8-Vg-p5U"/>
+                        </connections>
+                    </collectionView>
+                    <connections>
+                        <outlet property="collectionOfPhotos" destination="Yyx-dT-gy6" id="dAs-d5-wBk"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gLy-iL-6cD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="905" y="434"/>
         </scene>
     </scenes>
 </document>
