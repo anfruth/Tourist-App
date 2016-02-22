@@ -28,7 +28,6 @@ class PhotosCollectionViewController: UICollectionViewController, NSFetchedResul
             try fetchedResultsController.performFetch()
         } catch {}
         fetchedResultsController.delegate = self
-        
         navigationController?.navigationBarHidden = false
     }
     

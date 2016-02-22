@@ -152,8 +152,8 @@
 		EAD81F1D1C7296A600B98BB4 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				EAA532871C7161FC002C1C2F /* PhotosCollectionViewController.swift */,
 				EAC237011C6C54D8003A71DF /* TravelLocationsViewController.swift */,
+				EAA532871C7161FC002C1C2F /* PhotosCollectionViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
