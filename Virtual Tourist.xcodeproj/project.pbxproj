@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		EA2EE7A91C6C64A60098762A /* MapLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2EE7A81C6C64A60098762A /* MapLocation.swift */; };
+		EA8CF94A1C7AA1DE008398A4 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8CF9491C7AA1DE008398A4 /* PhotosCollectionViewCell.swift */; };
 		EAA532861C708356002C1C2F /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA532851C708356002C1C2F /* Config.swift */; };
 		EAA532881C7161FC002C1C2F /* PhotosCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA532871C7161FC002C1C2F /* PhotosCollectionViewController.swift */; };
-		EAA5328C1C7170CB002C1C2F /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAA5328B1C7170CB002C1C2F /* PhotosCollectionViewCell.swift */; };
 		EAC237001C6C54D8003A71DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC236FF1C6C54D8003A71DF /* AppDelegate.swift */; };
 		EAC237021C6C54D8003A71DF /* TravelLocationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC237011C6C54D8003A71DF /* TravelLocationsViewController.swift */; };
 		EAC237051C6C54D8003A71DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAC237031C6C54D8003A71DF /* Main.storyboard */; };
@@ -44,9 +44,9 @@
 
 /* Begin PBXFileReference section */
 		EA2EE7A81C6C64A60098762A /* MapLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLocation.swift; sourceTree = "<group>"; };
+		EA8CF9491C7AA1DE008398A4 /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		EAA532851C708356002C1C2F /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		EAA532871C7161FC002C1C2F /* PhotosCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewController.swift; sourceTree = "<group>"; };
-		EAA5328B1C7170CB002C1C2F /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotosCollectionViewCell.swift; path = ../PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		EAC236FC1C6C54D8003A71DF /* Virtual Tourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Virtual Tourist.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EAC236FF1C6C54D8003A71DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EAC237011C6C54D8003A71DF /* TravelLocationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelLocationsViewController.swift; sourceTree = "<group>"; };
@@ -161,8 +161,8 @@
 		EAD81F1E1C7296D800B98BB4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				EAA5328B1C7170CB002C1C2F /* PhotosCollectionViewCell.swift */,
 				EAD81F1F1C7299C700B98BB4 /* Pin.swift */,
+				EA8CF9491C7AA1DE008398A4 /* PhotosCollectionViewCell.swift */,
 				EAD81F211C72A47700B98BB4 /* Photo.swift */,
 				EA2EE7A81C6C64A60098762A /* MapLocation.swift */,
 			);
@@ -309,13 +309,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				EAC237021C6C54D8003A71DF /* TravelLocationsViewController.swift in Sources */,
+				EA8CF94A1C7AA1DE008398A4 /* PhotosCollectionViewCell.swift in Sources */,
 				EA2EE7A91C6C64A60098762A /* MapLocation.swift in Sources */,
 				EAC237331C6C5662003A71DF /* CoreDataStackManager.swift in Sources */,
 				EAD81F201C7299C700B98BB4 /* Pin.swift in Sources */,
 				EAD81F221C72A47700B98BB4 /* Photo.swift in Sources */,
 				EAA532881C7161FC002C1C2F /* PhotosCollectionViewController.swift in Sources */,
 				EAC237081C6C54D8003A71DF /* Virtual_Tourist.xcdatamodeld in Sources */,
-				EAA5328C1C7170CB002C1C2F /* PhotosCollectionViewCell.swift in Sources */,
 				EAC237001C6C54D8003A71DF /* AppDelegate.swift in Sources */,
 				EAA532861C708356002C1C2F /* Config.swift in Sources */,
 			);

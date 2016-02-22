@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import MapKit
 
-class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
+class TravelLocationsViewController: UIViewController, UIGestureRecognizerDelegate, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
 
@@ -20,6 +20,7 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
         
         // http://stackoverflow.com/questions/29241691/how-do-i-use-uilongpressgesturerecognizer-with-a-uicollectionviewcell-in-swift - Thank you.
         let gestureRec = UILongPressGestureRecognizer(target: self, action: "addPin:")
+        gestureRec.delegate = self
         mapView.addGestureRecognizer(gestureRec)
     }
 
@@ -31,22 +32,26 @@ class TravelLocationsViewController: UIViewController, MKMapViewDelegate {
     lazy var sharedContext = CoreDataStackManager.sharedInstance().managedObjectContext
     
     func addPin(gestureRec: UILongPressGestureRecognizer) {
-        // http://www.myswiftjourney.me/2014/10/23/using-mapkit-mkmapview-how-to-create-a-annotation/ thanks for help
-        let locationOfTap = gestureRec.locationInView(mapView)
-        let coordinates = mapView.convertPoint(locationOfTap, toCoordinateFromView: mapView)
         
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = coordinates
-        
-        let pin = Pin(coordinates: coordinates, context: sharedContext)
-        
-        do {
-            try pin.managedObjectContext?.save()
-        } catch {
-            print(error)
+        if gestureRec.state == .Ended {
+            
+            // http://www.myswiftjourney.me/2014/10/23/using-mapkit-mkmapview-how-to-create-a-annotation/ thanks for help
+            let locationOfTap = gestureRec.locationInView(mapView)
+            let coordinates = mapView.convertPoint(locationOfTap, toCoordinateFromView: mapView)
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinates
+            
+            let pin = Pin(coordinates: coordinates, context: sharedContext)
+            
+            do {
+                try pin.managedObjectContext?.save()
+            } catch {
+                print(error)
+            }
+            
+            mapView.addAnnotation(annotation)
         }
-        
-        mapView.addAnnotation(annotation)
     }
     
     

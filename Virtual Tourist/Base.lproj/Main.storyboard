@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="ZeX-dM-h4X">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="KYA-vd-cgy">
+            <objects>
+                <navigationController id="ZeX-dM-h4X" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5Py-Tx-XfD">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="10Y-v4-c6I"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vYs-ot-TQA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1178" y="215"/>
+        </scene>
         <!--Travel Locations View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -19,7 +35,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="2Uv-nz-nrf">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="3On-Gc-Cj8"/>
                                 </connections>
@@ -28,19 +44,29 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="2Uv-nz-nrf" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="7xn-Nv-oh7"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="2Uv-nz-nrf" secondAttribute="bottom" id="Uxq-WY-WDq"/>
                             <constraint firstItem="2Uv-nz-nrf" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="bGa-Vc-CQd"/>
+                            <constraint firstItem="2Uv-nz-nrf" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="iar-Na-aaz"/>
+                            <constraint firstItem="2Uv-nz-nrf" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="kQK-gT-fdA"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="2Uv-nz-nrf" secondAttribute="bottom" id="rmq-Th-KAS"/>
                             <constraint firstAttribute="trailingMargin" secondItem="2Uv-nz-nrf" secondAttribute="trailing" constant="-20" id="zYm-tT-8xi"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="7xn-Nv-oh7"/>
+                                <exclude reference="iar-Na-aaz"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <navigationItem key="navigationItem" id="eHX-kY-xBZ"/>
                     <connections>
                         <outlet property="mapView" destination="2Uv-nz-nrf" id="npn-D8-BoI"/>
-                        <segue destination="qC1-Ug-umv" kind="presentation" identifier="showPhotos" id="cWC-qF-8x5"/>
+                        <segue destination="qC1-Ug-umv" kind="show" identifier="showPhotos" id="SwQ-cS-qgF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="222" y="434"/>
+            <point key="canvasLocation" x="-446" y="227"/>
         </scene>
         <!--Photos Collection View Controller-->
         <scene sceneID="SKx-fc-SmT">
@@ -57,7 +83,7 @@
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCollectionViewCell" id="6Mw-zh-cwd" customClass="PhotosCollectionViewCell" customModule="Virtual_Tourist" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="123" height="113"/>
+                                <rect key="frame" x="0.0" y="64" width="123" height="113"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="123" height="113"/>
@@ -97,13 +123,21 @@
                             <outlet property="delegate" destination="qC1-Ug-umv" id="7e8-Vg-p5U"/>
                         </connections>
                     </collectionView>
+                    <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="collectionOfPhotos" destination="Yyx-dT-gy6" id="dAs-d5-wBk"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gLy-iL-6cD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <collectionViewFlowLayout minimumLineSpacing="10" minimumInteritemSpacing="10" id="YqJ-mG-nQi">
+                    <size key="itemSize" width="123" height="113"/>
+                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                </collectionViewFlowLayout>
             </objects>
-            <point key="canvasLocation" x="905" y="434"/>
+            <point key="canvasLocation" x="254" y="227"/>
         </scene>
     </scenes>
 </document>
