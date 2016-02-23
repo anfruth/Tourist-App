@@ -92,18 +92,28 @@
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Mng-LD-wU8">
                                             <rect key="frame" x="0.0" y="0.0" width="123" height="113"/>
                                         </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOADING" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o4a-i4-e3i">
+                                            <rect key="frame" x="25" y="46" width="73" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.8965105563002681" green="0.11470445278379586" blue="0.21180301423526351" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <constraints>
                                     <constraint firstItem="Mng-LD-wU8" firstAttribute="top" secondItem="6Mw-zh-cwd" secondAttribute="topMargin" constant="4" id="2kX-Nw-7og"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="o4a-i4-e3i" secondAttribute="trailing" constant="17" id="6i5-Up-imQ"/>
                                     <constraint firstItem="Mng-LD-wU8" firstAttribute="leading" secondItem="6Mw-zh-cwd" secondAttribute="leadingMargin" constant="-8" id="9FF-0h-oMl"/>
+                                    <constraint firstAttribute="bottomMargin" secondItem="o4a-i4-e3i" secondAttribute="bottom" constant="38" id="EB2-V7-oVs"/>
                                     <constraint firstItem="Mng-LD-wU8" firstAttribute="leading" secondItem="6Mw-zh-cwd" secondAttribute="leadingMargin" id="I6b-UO-yva"/>
+                                    <constraint firstItem="o4a-i4-e3i" firstAttribute="leading" secondItem="6Mw-zh-cwd" secondAttribute="leadingMargin" constant="17" id="ThQ-1Z-Mi2"/>
                                     <constraint firstItem="Mng-LD-wU8" firstAttribute="top" secondItem="6Mw-zh-cwd" secondAttribute="topMargin" constant="-8" id="W1q-zU-Qpr"/>
                                     <constraint firstAttribute="trailingMargin" secondItem="Mng-LD-wU8" secondAttribute="trailing" constant="-8" id="Xo5-Gz-eW1"/>
                                     <constraint firstAttribute="bottomMargin" secondItem="Mng-LD-wU8" secondAttribute="bottom" constant="-8" id="bYf-im-8YV"/>
                                     <constraint firstItem="Mng-LD-wU8" firstAttribute="centerY" secondItem="6Mw-zh-cwd" secondAttribute="centerY" id="l0s-rb-XBO"/>
                                     <constraint firstItem="Mng-LD-wU8" firstAttribute="centerX" secondItem="6Mw-zh-cwd" secondAttribute="centerX" id="maG-cZ-Ii4"/>
+                                    <constraint firstItem="o4a-i4-e3i" firstAttribute="top" secondItem="6Mw-zh-cwd" secondAttribute="topMargin" constant="38" id="xzR-ad-s3z"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -115,6 +125,7 @@
                                 </variation>
                                 <connections>
                                     <outlet property="photo" destination="Mng-LD-wU8" id="xwg-o4-0i6"/>
+                                    <outlet property="placeholderText" destination="o4a-i4-e3i" id="3nu-mF-aaP"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>

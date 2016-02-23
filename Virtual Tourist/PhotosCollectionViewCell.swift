@@ -11,4 +11,8 @@ import UIKit
 class PhotosCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var photo: UIImageView!
+    @IBOutlet weak var placeholderText: UILabel!
+    
+    
+    
 }

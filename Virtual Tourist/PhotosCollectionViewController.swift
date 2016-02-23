@@ -60,13 +60,19 @@ class PhotosCollectionViewController: UICollectionViewController, NSFetchedResul
         
         print("number Of Cells: \(sectionInfo.numberOfObjects)")
         return sectionInfo.numberOfObjects
-        
     }
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(cellReuseIdentifier, forIndexPath: indexPath) as! PhotosCollectionViewCell
         let photo = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
+        
         cell.photo?.image = photo.retrieveImage()
+        if cell.photo?.image == nil {
+           cell.placeholderText.hidden = false
+        } else {
+            cell.placeholderText.hidden = true
+        }
+        cell.placeholderText.text = "LOADING"
         return cell
     }
     

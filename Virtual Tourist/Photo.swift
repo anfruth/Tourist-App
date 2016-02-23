@@ -12,24 +12,33 @@ import MapKit
 
 class Photo : NSManagedObject {
     
-    @NSManaged var image: NSData
+    @NSManaged var image: NSData?
     @NSManaged var pin: Pin
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
     
-    init(flickrPhoto: UIImage, context: NSManagedObjectContext) {
+    init(flickrPhoto: UIImage?, context: NSManagedObjectContext) {
         
         let entity =  NSEntityDescription.entityForName("Photo", inManagedObjectContext: context)!
         super.init(entity: entity, insertIntoManagedObjectContext: context)
         
-        image = UIImageJPEGRepresentation(flickrPhoto, 1)!
+        if flickrPhoto != nil {
+            image = UIImageJPEGRepresentation(flickrPhoto!, 1)!
+        }
         
     }
     
-    func retrieveImage() -> UIImage {
-        return UIImage(data: image)!
+    func addImage(flickrPhoto: UIImage) {
+        image = UIImageJPEGRepresentation(flickrPhoto, 1)!
+    }
+    
+    func retrieveImage() -> UIImage? {
+        if image != nil {
+            return UIImage(data: image!)!
+        }
+        return nil
     }
     
     

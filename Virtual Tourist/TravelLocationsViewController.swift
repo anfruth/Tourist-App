@@ -128,16 +128,17 @@ class TravelLocationsViewController: UIViewController, UIGestureRecognizerDelega
                                 let id = photo["id"] as! String
                                 let secret = photo["secret"] as! String
                                 
+                                let photo = Photo(flickrPhoto: nil, context: self.sharedContext)
+                                photo.pin = pin
+                                CoreDataStackManager.sharedInstance().saveContext()
+                                
                                 let url = NSURL(string: "https://farm\(farmID).staticflickr.com/\(serverID)/\(id)_\(secret).jpg")!
                                 
                                 let task = session.dataTaskWithURL(url) { data, response, error in
                                     if error == nil {
                                         let image = UIImage(data: data!)!
-                                        let photo = Photo(flickrPhoto: image, context: self.sharedContext)
-                                        
-                                        photo.pin = pin
+                                        photo.addImage(image)
                                         CoreDataStackManager.sharedInstance().saveContext()
-    //                                    pin.photos!.append(photo)
                                     } else {
                                         print("shite")
                                         print(error!.localizedDescription)
