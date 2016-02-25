@@ -78,88 +78,12 @@ class TravelLocationsViewController: UIViewController, UIGestureRecognizerDelega
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         
         let coordinates = (mapView.selectedAnnotations[0] as! MKPointAnnotation).coordinate
-        let latitude = coordinates.latitude as NSNumber
-        let longitude = coordinates.longitude as NSNumber
-
+        let pin = CoreDataLookup.retrieveClickedPin(coordinates, context: sharedContext)
         
-        let fetchRequest = NSFetchRequest()
-        let entityDescription = NSEntityDescription.entityForName("Pin", inManagedObjectContext: self.sharedContext)
-        fetchRequest.entity = entityDescription
-        
-        let latPredicate = NSPredicate(format: "latitude == %@", latitude)
-        let longPredicate = NSPredicate(format: "longitude == %@", longitude)
-        let predicate = NSCompoundPredicate(type: NSCompoundPredicateType.OrPredicateType, subpredicates: [latPredicate, longPredicate])
-        
-        fetchRequest.predicate = predicate
-        var pinObject: AnyObject? = nil
-        do {
-            pinObject = try self.sharedContext.executeFetchRequest(fetchRequest)
-        } catch {
-            let fetchError = error as NSError
-            print(fetchError)
+        if pin.photos?.count == 0 { // no photos downloaded yet
+            ApiClient.retrievePhotos(coordinates, pin: pin, context: sharedContext)
         }
         
-        let pin = pinObject![0] as! Pin // here is the relevant pin
-        
-        if pin.photos?.count == 0 {
-        
-            let url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(Config.key)&lat=\(coordinates.latitude)&lon=\(coordinates.longitude)&format=json&nojsoncallback=1&per_page=20"
-            let request = NSMutableURLRequest(URL: NSURL(string: url)!)
-            request.HTTPMethod = "GET"
-            let session = NSURLSession.sharedSession()
-            
-            let task = session.dataTaskWithRequest(request) { data, response, error in
-                if error == nil {
-                    var parsedResult: AnyObject? = nil
-                    do {
-                        parsedResult = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
-                    } catch {
-                        print("fail whale")
-                        return
-                    }
-                    
-                    var totalPhotos: Int?
-                    if let photos = parsedResult!["photos"] as? [String: AnyObject] {
-                        if let photoGroup = photos["photo"] as? [[String: AnyObject]] {
-                            totalPhotos = photoGroup.count
-                            for photo in photoGroup {
-                                let farmID = photo["farm"] as! Int
-                                let serverID = photo["server"] as! String
-                                let id = photo["id"] as! String
-                                let secret = photo["secret"] as! String
-                                
-                                let photo = Photo(flickrPhoto: nil, context: self.sharedContext)
-                                photo.pin = pin
-                                CoreDataStackManager.sharedInstance().saveContext()
-                                
-                                let url = NSURL(string: "https://farm\(farmID).staticflickr.com/\(serverID)/\(id)_\(secret).jpg")!
-                                
-                                let task = session.dataTaskWithURL(url) { data, response, error in
-                                    if error == nil {
-                                        let image = UIImage(data: data!)!
-                                        photo.addImage(image)
-                                        CoreDataStackManager.sharedInstance().saveContext()
-                                    } else {
-                                        print("shite")
-                                        print(error!.localizedDescription)
-                                        return
-                                    }
-                                }
-                                task.resume()
-                            }
-                        }
-                    }
-                    
-                    PhotosCollectionViewController.totalPhotos = totalPhotos
-
-                } else {
-                    print(error!.localizedDescription)
-                }
-            }
-            task.resume()
-        } else { // else core data already has photos
-            PhotosCollectionViewController.totalPhotos = pin.photos!.count
-        }
         PhotosCollectionViewController.pinTapped = pin
         
         NSOperationQueue.mainQueue().addOperationWithBlock() {

@@ -19,7 +19,6 @@ class PhotosCollectionViewController: UICollectionViewController, NSFetchedResul
     var deletedIndexPaths: [NSIndexPath]!
     var updatedIndexPaths: [NSIndexPath]!
     
-    static var totalPhotos: Int?
     static var pinTapped: Pin?
     
     override func viewDidLoad() {
