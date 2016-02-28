@@ -28,31 +28,17 @@ class PhotosCollectionViewController: UICollectionViewController, NSFetchedResul
             try fetchedResultsController.performFetch()
         } catch {}
         fetchedResultsController.delegate = self
-        navigationController?.navigationBarHidden = false
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.navigationBar.hidden = false
+        navigationController?.toolbar.hidden = false
     }
     
     @IBAction func getNewImages(sender: UIBarButtonItem) {
-        let fetchRequest = NSFetchRequest()
-        let entityDescription = NSEntityDescription.entityForName("Photo", inManagedObjectContext: sharedContext)
-        fetchRequest.entity = entityDescription
         
-        
-        let predicate = NSPredicate(format: "pin == %@", PhotosCollectionViewController.pinTapped!)
-        fetchRequest.predicate = predicate
-        
-        var photoObject: AnyObject? = nil
-        do {
-            photoObject = try sharedContext.executeFetchRequest(fetchRequest)
-        } catch {
-            let fetchError = error as NSError
-            print(fetchError)
-            return
-        }
-        
+        let photoObject = CoreDataLookup.retrievePinPhotos(sharedContext)
         let photos = photoObject as! [Photo]
         
         for photo in photos {
@@ -63,7 +49,6 @@ class PhotosCollectionViewController: UICollectionViewController, NSFetchedResul
         let longitude = PhotosCollectionViewController.pinTapped!.longitude as Double
         let coordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         
-
         ApiClient.retrievePhotos(coordinates, pin: PhotosCollectionViewController.pinTapped!, context: sharedContext)
     }
     
@@ -72,9 +57,8 @@ class PhotosCollectionViewController: UICollectionViewController, NSFetchedResul
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
         let fetchRequest = NSFetchRequest(entityName: "Photo")
-        
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "pin", ascending: true)]
         fetchRequest.predicate = NSPredicate(format: "pin == %@", PhotosCollectionViewController.pinTapped!)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
         
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
             managedObjectContext: self.sharedContext,
@@ -107,6 +91,23 @@ class PhotosCollectionViewController: UICollectionViewController, NSFetchedResul
         return cell
     }
     
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        let photo = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
+        
+        let fetchRequest = CoreDataLookup.setupFetchRequest("Photo", context: sharedContext)
+        
+        let predicate = NSPredicate(format: "id == %@", photo.id)
+        fetchRequest.predicate = predicate
+    
+        let photoObject = CoreDataLookup.executeFetchRequest(sharedContext, fetchRequest: fetchRequest)
+        let coreDataPhoto = photoObject as! [Photo]
+
+        sharedContext.deleteObject(coreDataPhoto[0])
+        CoreDataStackManager.sharedInstance().saveContext()
+        
+    }
+    
     // NSFetchedResultsControllerDelegate
     
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
@@ -124,28 +125,17 @@ class PhotosCollectionViewController: UICollectionViewController, NSFetchedResul
                 
             case .Insert:
                 print("Insert an item")
-                // Here we are noting that a new Color instance has been added to Core Data. We remember its index path
-                // so that we can add a cell in "controllerDidChangeContent". Note that the "newIndexPath" parameter has
-                // the index path that we want in this case
                 insertedIndexPaths.append(newIndexPath!)
                 break
             case .Delete:
                 print("Delete an item")
-                // Here we are noting that a Color instance has been deleted from Core Data. We keep remember its index path
-                // so that we can remove the corresponding cell in "controllerDidChangeContent". The "indexPath" parameter has
-                // value that we want in this case.
                 deletedIndexPaths.append(indexPath!)
                 break
             case .Update:
                 print("Update an item.")
-                // We don't expect Color instances to change after they are created. But Core Data would
-                // notify us of changes if any occured. This can be useful if you want to respond to changes
-                // that come about after data is downloaded. For example, when an images is downloaded from
-                // Flickr in the Virtual Tourist app
                 updatedIndexPaths.append(indexPath!)
                 break
             case .Move:
-                print("Move an item. We don't expect to see this in this app.")
                 break
             }
 

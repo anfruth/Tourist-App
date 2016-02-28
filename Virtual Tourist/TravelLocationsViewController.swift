@@ -24,6 +24,12 @@ class TravelLocationsViewController: UIViewController, UIGestureRecognizerDelega
         gestureRec.delegate = self
         mapView.addGestureRecognizer(gestureRec)
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.hidden = true
+        navigationController?.toolbar.hidden = true
+    }
 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
