@@ -15,7 +15,7 @@ struct ApiClient {
     
     static func retrievePhotos(coordinates: CLLocationCoordinate2D, pin: Pin, context: NSManagedObjectContext) {
         
-        let url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(Config.key)&lat=\(coordinates.latitude)&lon=\(coordinates.longitude)&format=json&nojsoncallback=1&per_page=20"
+        let url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=\(Config.key)&lat=\(coordinates.latitude)&lon=\(coordinates.longitude)&format=json&nojsoncallback=1&per_page=500"
         
         let request = NSMutableURLRequest(URL: NSURL(string: url)!)
         request.HTTPMethod = "GET"
@@ -42,8 +42,22 @@ struct ApiClient {
     
     private static func downloadAllImages(parsedResult: AnyObject?, pin: Pin, session: NSURLSession, context: NSManagedObjectContext) {
         if let photos = parsedResult!["photos"] as? [String: AnyObject] {
-            if let photoGroup = photos["photo"] as? [[String: AnyObject]] {
-                for photo in photoGroup {
+            if var photoGroup = photos["photo"] as? [[String: AnyObject]] {
+                
+                let numberOfPhotosToIterate: Int = {
+                    if photoGroup.count < 20 {
+                        return photoGroup.count
+                    } else {
+                        return 20
+                    }
+                }()
+                
+                
+                for (var i = 0; i < numberOfPhotosToIterate; ++i) {
+                    
+                    let randomIndex = Int(arc4random_uniform(UInt32(photoGroup.count)))
+                    let photo = photoGroup[randomIndex]
+                    photoGroup.removeAtIndex(randomIndex)
                     
                     if let endpointPhoto = ApiClient.getEndpointForImage(photo, pin: pin, session: session, context: context) {
                         let url = endpointPhoto.0

@@ -33,30 +33,39 @@ class PhotosCollectionViewController: UICollectionViewController, NSFetchedResul
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        collectionOfPhotos.reloadData()
     }
     
-//    @IBAction func getNewImages(sender: UIBarButtonItem) {
-//        let fetchRequest = NSFetchRequest()
-//        let entityDescription = NSEntityDescription.entityForName("Photo", inManagedObjectContext: sharedContext)
-//        fetchRequest.entity = entityDescription
-//        
-//        let predicate = NSPredicate(format: "photos.pin == %@", PhotosCollectionViewController.pinTapped!)
-//        fetchRequest.predicate = predicate
-//        
-//        var photoObject: AnyObject? = nil
-//        do {
-//            photoObject = try sharedContext.executeFetchRequest(fetchRequest)
-//        } catch {
-//            let fetchError = error as NSError
-//            print(fetchError)
-//        }
-//        
-////        return pinObject![0] as! Pin // here is the relevant pin
-//
-//        
-//        collectionOfPhotos.reloadData()
-//    }
+    @IBAction func getNewImages(sender: UIBarButtonItem) {
+        let fetchRequest = NSFetchRequest()
+        let entityDescription = NSEntityDescription.entityForName("Photo", inManagedObjectContext: sharedContext)
+        fetchRequest.entity = entityDescription
+        
+        
+        let predicate = NSPredicate(format: "pin == %@", PhotosCollectionViewController.pinTapped!)
+        fetchRequest.predicate = predicate
+        
+        var photoObject: AnyObject? = nil
+        do {
+            photoObject = try sharedContext.executeFetchRequest(fetchRequest)
+        } catch {
+            let fetchError = error as NSError
+            print(fetchError)
+            return
+        }
+        
+        let photos = photoObject as! [Photo]
+        
+        for photo in photos {
+           sharedContext.deleteObject(photo)
+        }
+        
+        let latitude = PhotosCollectionViewController.pinTapped!.latitude as Double
+        let longitude = PhotosCollectionViewController.pinTapped!.longitude as Double
+        let coordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        
+
+        ApiClient.retrievePhotos(coordinates, pin: PhotosCollectionViewController.pinTapped!, context: sharedContext)
+    }
     
     lazy var sharedContext = CoreDataStackManager.sharedInstance().managedObjectContext
     
@@ -64,7 +73,7 @@ class PhotosCollectionViewController: UICollectionViewController, NSFetchedResul
         
         let fetchRequest = NSFetchRequest(entityName: "Photo")
         
-        fetchRequest.sortDescriptors = []
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "pin", ascending: true)]
         fetchRequest.predicate = NSPredicate(format: "pin == %@", PhotosCollectionViewController.pinTapped!)
         
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
@@ -144,7 +153,7 @@ class PhotosCollectionViewController: UICollectionViewController, NSFetchedResul
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
         
-        print("in controllerDidChangeContent. changes.count: \(insertedIndexPaths.count + deletedIndexPaths.count)")
+        print("in controllerDidChangeContent. changes.count: \(updatedIndexPaths.count + deletedIndexPaths.count)")
         
         collectionOfPhotos.performBatchUpdates({() -> Void in
             

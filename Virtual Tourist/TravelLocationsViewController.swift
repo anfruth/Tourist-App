@@ -17,6 +17,7 @@ class TravelLocationsViewController: UIViewController, UIGestureRecognizerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         retrieveMapRegion()
+        retrievePins()
         
         // http://stackoverflow.com/questions/29241691/how-do-i-use-uilongpressgesturerecognizer-with-a-uicollectionviewcell-in-swift - Thank you.
         let gestureRec = UILongPressGestureRecognizer(target: self, action: "addPin:")
@@ -132,6 +133,25 @@ class TravelLocationsViewController: UIViewController, UIGestureRecognizerDelega
                 let saveError = error as NSError
                 print(saveError)
             }
+        }
+    }
+    
+    private func retrievePins() {
+        let fetchRequest = NSFetchRequest()
+        let entityDescription = NSEntityDescription.entityForName("Pin", inManagedObjectContext: sharedContext)
+        fetchRequest.entity = entityDescription
+        
+        do {
+            
+            let results = try sharedContext.executeFetchRequest(fetchRequest)
+            for pinObject in results {
+                let annotation = (pinObject as! Pin).generateCoordinates()
+                 mapView.addAnnotation(annotation)
+            }
+            
+        } catch {
+            let fetchError = error as NSError
+            print(fetchError)
         }
     }
     
