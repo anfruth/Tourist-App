@@ -13,6 +13,7 @@ import MapKit
 class PhotosCollectionViewController: UICollectionViewController, NSFetchedResultsControllerDelegate {
     
     @IBOutlet weak var collectionOfPhotos: UICollectionView!
+
     let cellReuseIdentifier = "photoCollectionViewCell"
     
     var insertedIndexPaths: [NSIndexPath]!
@@ -34,6 +35,28 @@ class PhotosCollectionViewController: UICollectionViewController, NSFetchedResul
         super.viewWillAppear(animated)
         collectionOfPhotos.reloadData()
     }
+    
+//    @IBAction func getNewImages(sender: UIBarButtonItem) {
+//        let fetchRequest = NSFetchRequest()
+//        let entityDescription = NSEntityDescription.entityForName("Photo", inManagedObjectContext: sharedContext)
+//        fetchRequest.entity = entityDescription
+//        
+//        let predicate = NSPredicate(format: "photos.pin == %@", PhotosCollectionViewController.pinTapped!)
+//        fetchRequest.predicate = predicate
+//        
+//        var photoObject: AnyObject? = nil
+//        do {
+//            photoObject = try sharedContext.executeFetchRequest(fetchRequest)
+//        } catch {
+//            let fetchError = error as NSError
+//            print(fetchError)
+//        }
+//        
+////        return pinObject![0] as! Pin // here is the relevant pin
+//
+//        
+//        collectionOfPhotos.reloadData()
+//    }
     
     lazy var sharedContext = CoreDataStackManager.sharedInstance().managedObjectContext
     

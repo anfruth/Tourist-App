@@ -31,11 +31,7 @@ struct ApiClient {
                     return // could cause problems
                 }
                 
-                if let endpointPhoto = ApiClient.getEndpointForImage(parsedResult, pin: pin, session: session, context: context) {
-                    let url = endpointPhoto.0
-                    let photo = endpointPhoto.1
-                    ApiClient.downloadImage(url, session: session, photo: photo)
-                }
+                downloadAllImages(parsedResult, pin: pin, session: session, context: context)
                 
             } else {
                 print(error!.localizedDescription)
@@ -44,26 +40,34 @@ struct ApiClient {
         task.resume()
     }
     
-    private static func getEndpointForImage(parsedResult: AnyObject?, pin: Pin, session: NSURLSession, context: NSManagedObjectContext) -> (NSURL, photo: Photo)? {
-        
+    private static func downloadAllImages(parsedResult: AnyObject?, pin: Pin, session: NSURLSession, context: NSManagedObjectContext) {
         if let photos = parsedResult!["photos"] as? [String: AnyObject] {
             if let photoGroup = photos["photo"] as? [[String: AnyObject]] {
                 for photo in photoGroup {
-                    let farmID = photo["farm"] as! Int
-                    let serverID = photo["server"] as! String
-                    let id = photo["id"] as! String
-                    let secret = photo["secret"] as! String
                     
-                    let photo = Photo(flickrPhoto: nil, context: context)
-                    photo.pin = pin
-                    CoreDataStackManager.sharedInstance().saveContext()
-                    
-                    return (NSURL(string: "https://farm\(farmID).staticflickr.com/\(serverID)/\(id)_\(secret).jpg")!, photo)
+                    if let endpointPhoto = ApiClient.getEndpointForImage(photo, pin: pin, session: session, context: context) {
+                        let url = endpointPhoto.0
+                        let photo = endpointPhoto.1
+                        ApiClient.downloadImage(url, session: session, photo: photo)
+                    }
                 }
             }
         }
-        print("parsedResult does not contain 'photos' or 'photo' key")
-        return nil
+    }
+    
+    private static func getEndpointForImage(photo: [String: AnyObject], pin: Pin, session: NSURLSession, context: NSManagedObjectContext) -> (NSURL, photo: Photo)? {
+        
+        let farmID = photo["farm"] as! Int
+        let serverID = photo["server"] as! String
+        let id = photo["id"] as! String
+        let secret = photo["secret"] as! String
+        
+        let photo = Photo(flickrPhoto: nil, context: context)
+        photo.pin = pin
+        CoreDataStackManager.sharedInstance().saveContext()
+        
+        return (NSURL(string: "https://farm\(farmID).staticflickr.com/\(serverID)/\(id)_\(secret).jpg")!, photo)
+        
     }
     
     private static func downloadImage(url: NSURL, session: NSURLSession, photo: Photo) {
