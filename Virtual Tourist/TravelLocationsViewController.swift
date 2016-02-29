@@ -38,26 +38,39 @@ class TravelLocationsViewController: UIViewController, UIGestureRecognizerDelega
     
     lazy var sharedContext = CoreDataStackManager.sharedInstance().managedObjectContext
     
+    var annotationToAdd: DraggableAnnotation? = nil
+    
     func addPin(gestureRec: UILongPressGestureRecognizer) {
+        // much of below code credit goes to this thread: https://discussions.udacity.com/t/how-can-i-make-a-new-pin-draggable-right-after-adding-it/26653/16
+        
+        // http://www.myswiftjourney.me/2014/10/23/using-mapkit-mkmapview-how-to-create-a-annotation/ thanks for help
+        let locationOfTap = gestureRec.locationInView(mapView)
+        let coordinates = mapView.convertPoint(locationOfTap, toCoordinateFromView: mapView)
+        
+        if gestureRec.state == .Began {
+            annotationToAdd = DraggableAnnotation()
+            annotationToAdd!.setCoordinate(coordinates)
+            mapView.addAnnotation(annotationToAdd!)
+        }
+
+        if gestureRec.state == .Changed {
+            let currentLocation = gestureRec.locationInView(mapView)
+            let coordinates = mapView.convertPoint(currentLocation, toCoordinateFromView: mapView)
+            annotationToAdd!.setCoordinate(coordinates)
+        }
         
         if gestureRec.state == .Ended {
             
             // http://www.myswiftjourney.me/2014/10/23/using-mapkit-mkmapview-how-to-create-a-annotation/ thanks for help
-            let locationOfTap = gestureRec.locationInView(mapView)
-            let coordinates = mapView.convertPoint(locationOfTap, toCoordinateFromView: mapView)
-            
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = coordinates
+            annotationToAdd!.setCoordinate(coordinates)
             
             let pin = Pin(coordinates: coordinates, context: sharedContext)
-            
-            do {
-                try pin.managedObjectContext?.save()
-            } catch {
-                print(error)
+            CoreDataStackManager.sharedInstance().saveContext()
+                
+            if pin.photos?.count == 0 { // no photos downloaded yet
+                ApiClient.retrievePhotos(coordinates, pin: pin, context: sharedContext)
             }
             
-            mapView.addAnnotation(annotation)
         }
     }
     
@@ -84,18 +97,11 @@ class TravelLocationsViewController: UIViewController, UIGestureRecognizerDelega
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         
-        let coordinates = (mapView.selectedAnnotations[0] as! MKPointAnnotation).coordinate
+        let coordinates = (mapView.selectedAnnotations[0] as! DraggableAnnotation).coordinate
         let pin = CoreDataLookup.retrieveClickedPin(coordinates, context: sharedContext)
         
-        if pin.photos?.count == 0 { // no photos downloaded yet
-            ApiClient.retrievePhotos(coordinates, pin: pin, context: sharedContext)
-        }
-        
         PhotosCollectionViewController.pinTapped = pin
-        
-        NSOperationQueue.mainQueue().addOperationWithBlock() {
-            self.performSegueWithIdentifier("showPhotos", sender: self)
-        }
+        self.performSegueWithIdentifier("showPhotos", sender: self)
         
     }
     

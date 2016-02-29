@@ -108,7 +108,7 @@ class PhotosCollectionViewController: UICollectionViewController, NSFetchedResul
         
     }
     
-    // NSFetchedResultsControllerDelegate
+    // NSFetchedResultsControllerDelegate - from color App
     
     func controllerWillChangeContent(controller: NSFetchedResultsController) {
         insertedIndexPaths = [NSIndexPath]()
