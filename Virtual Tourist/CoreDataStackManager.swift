@@ -10,7 +10,7 @@ import CoreData
 
 // MARK: - Core Data stack
 
-private let SQLITE_FILE_NAME = "VirtualTourist.sqlite"
+private let SQLITE_FILE_NAME = "VirtualTouristAndrew18302.sqlite"
 
 class CoreDataStackManager {
     

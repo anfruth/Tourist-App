@@ -73,7 +73,6 @@ class PhotosCollectionViewController: UICollectionViewController, NSFetchedResul
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let sectionInfo = self.fetchedResultsController.sections![section]
         
-        print("number Of Cells: \(sectionInfo.numberOfObjects)")
         return sectionInfo.numberOfObjects
     }
     
@@ -114,8 +113,6 @@ class PhotosCollectionViewController: UICollectionViewController, NSFetchedResul
         insertedIndexPaths = [NSIndexPath]()
         deletedIndexPaths = [NSIndexPath]()
         updatedIndexPaths = [NSIndexPath]()
-        
-        print("in controllerWillChangeContent")
     }
     
     func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?,
@@ -124,15 +121,12 @@ class PhotosCollectionViewController: UICollectionViewController, NSFetchedResul
             switch type{
                 
             case .Insert:
-                print("Insert an item")
                 insertedIndexPaths.append(newIndexPath!)
                 break
             case .Delete:
-                print("Delete an item")
                 deletedIndexPaths.append(indexPath!)
                 break
             case .Update:
-                print("Update an item.")
                 updatedIndexPaths.append(indexPath!)
                 break
             case .Move:
@@ -142,8 +136,6 @@ class PhotosCollectionViewController: UICollectionViewController, NSFetchedResul
     }
     
     func controllerDidChangeContent(controller: NSFetchedResultsController) {
-        
-        print("in controllerDidChangeContent. changes.count: \(updatedIndexPaths.count + deletedIndexPaths.count)")
         
         collectionOfPhotos.performBatchUpdates({() -> Void in
             

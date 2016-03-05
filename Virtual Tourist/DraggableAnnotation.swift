@@ -16,10 +16,15 @@ class DraggableAnnotation: NSObject, MKAnnotation {
     private var location = CLLocationCoordinate2D()
     
     var coordinate: CLLocationCoordinate2D {
-        return location
+        get {
+            return location
+        }
+        set(newCoordinate) {
+           location = newCoordinate
+        }
     }
     
-    func setCoordinate(newCoordinate: CLLocationCoordinate2D) {
+    func setCoordinates(newCoordinate: CLLocationCoordinate2D) {
         willChangeValueForKey("coordinate")
         location = newCoordinate
         didChangeValueForKey("coordinate")

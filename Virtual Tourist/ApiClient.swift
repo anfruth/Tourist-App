@@ -59,38 +59,46 @@ struct ApiClient {
                     let photo = photoGroup[randomIndex]
                     photoGroup.removeAtIndex(randomIndex)
                     
-                    if let endpointPhoto = ApiClient.getEndpointForImage(photo, pin: pin, session: session, context: context) {
-                        let url = endpointPhoto.0
-                        let photo = endpointPhoto.1
-                        ApiClient.downloadImage(url, session: session, photo: photo)
-                    }
+                    ApiClient.getEndpointForImage(photo, pin: pin, session: session, context: context, handler: {endpoint, photo in
+                        ApiClient.downloadImage(endpoint, session: session, photo: photo)
+                    })
+                    
                 }
             }
         }
     }
     
-    private static func getEndpointForImage(photo: [String: AnyObject], pin: Pin, session: NSURLSession, context: NSManagedObjectContext) -> (NSURL, photo: Photo)? {
+    private static func getEndpointForImage(photo: [String: AnyObject], pin: Pin, session: NSURLSession, context: NSManagedObjectContext, handler: (endpoint: NSURL, photo: Photo) -> ()) -> () {
         
         let farmID = photo["farm"] as! Int
         let serverID = photo["server"] as! String
         let id = photo["id"] as! String
         let secret = photo["secret"] as! String
         
-        let photo = Photo(flickrPhoto: nil, context: context)
-        photo.pin = pin
-        CoreDataStackManager.sharedInstance().saveContext()
         
-        return (NSURL(string: "https://farm\(farmID).staticflickr.com/\(serverID)/\(id)_\(secret).jpg")!, photo)
+        dispatch_async(dispatch_get_main_queue(), {
+            let photo = Photo(flickrPhoto: nil, context: context)
+            photo.pin = pin
+            CoreDataStackManager.sharedInstance().saveContext()
+            
+            dispatch_async(dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0), {
+                let endpoint = NSURL(string: "https://farm\(farmID).staticflickr.com/\(serverID)/\(id)_\(secret).jpg")!
+                handler(endpoint: endpoint, photo: photo)
+            })
+        })
         
     }
     
     private static func downloadImage(url: NSURL, session: NSURLSession, photo: Photo) {
         
         let task = session.dataTaskWithURL(url) { data, response, error in
+            
             if error == nil {
                 let image = UIImage(data: data!)!
-                photo.addImage(image)
-                CoreDataStackManager.sharedInstance().saveContext()
+                dispatch_async(dispatch_get_main_queue(), {
+                    photo.addImage(image)
+                    CoreDataStackManager.sharedInstance().saveContext()
+                })
             } else {
                 print("shite")
                 print(error!.localizedDescription)

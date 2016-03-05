@@ -31,13 +31,13 @@ class Pin : NSManagedObject{
         
     }
     
-    func generateCoordinates() -> MKPointAnnotation {
+    func generateCoordinates() -> DraggableAnnotation {
         
         let castLatitude = latitude as CLLocationDegrees
         let castLongitude = longitude as CLLocationDegrees
         
         let coordinates = CLLocationCoordinate2D(latitude: castLatitude, longitude: castLongitude)
-        let annotation = MKPointAnnotation()
+        let annotation = DraggableAnnotation()
         annotation.coordinate = coordinates
         
         return annotation

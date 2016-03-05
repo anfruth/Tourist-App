@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EA0F56A21C8AA67500E12670 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0F56A11C8AA67500E12670 /* ImageCache.swift */; };
 		EA2EE7A91C6C64A60098762A /* MapLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA2EE7A81C6C64A60098762A /* MapLocation.swift */; };
 		EA8CF94A1C7AA1DE008398A4 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8CF9491C7AA1DE008398A4 /* PhotosCollectionViewCell.swift */; };
 		EA8CF94C1C7DA217008398A4 /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA8CF94B1C7DA217008398A4 /* ApiClient.swift */; };
@@ -46,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		EA0F56A11C8AA67500E12670 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		EA2EE7A81C6C64A60098762A /* MapLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapLocation.swift; sourceTree = "<group>"; };
 		EA8CF9491C7AA1DE008398A4 /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		EA8CF94B1C7DA217008398A4 /* ApiClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 				EAD81F1F1C7299C700B98BB4 /* Pin.swift */,
 				EA8CF9491C7AA1DE008398A4 /* PhotosCollectionViewCell.swift */,
 				EAD81F211C72A47700B98BB4 /* Photo.swift */,
+				EA0F56A11C8AA67500E12670 /* ImageCache.swift */,
 				EA2EE7A81C6C64A60098762A /* MapLocation.swift */,
 				EA8CF94B1C7DA217008398A4 /* ApiClient.swift */,
 				EA8CF94D1C7ED7DF008398A4 /* CoreDataLookup.swift */,
@@ -329,6 +332,7 @@
 				EAFFCD481C8403D300254850 /* DraggableAnnotation.swift in Sources */,
 				EAC237081C6C54D8003A71DF /* Virtual_Tourist.xcdatamodeld in Sources */,
 				EAC237001C6C54D8003A71DF /* AppDelegate.swift in Sources */,
+				EA0F56A21C8AA67500E12670 /* ImageCache.swift in Sources */,
 				EAA532861C708356002C1C2F /* Config.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -12,7 +12,7 @@ import MapKit
 
 class Photo : NSManagedObject {
     
-    @NSManaged var image: NSData?
+    @NSManaged var imagePath: String?
     @NSManaged var pin: Pin
     @NSManaged var id: String
     
@@ -28,18 +28,23 @@ class Photo : NSManagedObject {
         id = NSUUID().UUIDString
         
         if flickrPhoto != nil {
-            image = UIImageJPEGRepresentation(flickrPhoto!, 1)!
+            imagePath = Caches.imageCache.pathForIdentifier(id + ".jpg")
         }
         
     }
     
+    struct Caches {
+        static let imageCache = ImageCache()
+    }
+    
     func addImage(flickrPhoto: UIImage) {
-        image = UIImageJPEGRepresentation(flickrPhoto, 1)!
+        imagePath = Caches.imageCache.pathForIdentifier(id)
+        Caches.imageCache.storeImage(flickrPhoto, withIdentifier: id + ".jpg")
     }
     
     func retrieveImage() -> UIImage? {
-        if image != nil {
-            return UIImage(data: image!)!
+        if imagePath != nil {
+           return Caches.imageCache.imageWithIdentifier(id + ".jpg")
         }
         return nil
     }

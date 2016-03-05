@@ -48,28 +48,35 @@ class TravelLocationsViewController: UIViewController, UIGestureRecognizerDelega
         let coordinates = mapView.convertPoint(locationOfTap, toCoordinateFromView: mapView)
         
         if gestureRec.state == .Began {
-            annotationToAdd = DraggableAnnotation()
-            annotationToAdd!.setCoordinate(coordinates)
-            mapView.addAnnotation(annotationToAdd!)
+            dispatch_async(dispatch_get_main_queue(), {
+                self.annotationToAdd = DraggableAnnotation()
+                self.annotationToAdd!.setCoordinates(coordinates)
+                self.mapView.addAnnotation(self.annotationToAdd!)
+            })
         }
 
         if gestureRec.state == .Changed {
             let currentLocation = gestureRec.locationInView(mapView)
             let coordinates = mapView.convertPoint(currentLocation, toCoordinateFromView: mapView)
-            annotationToAdd!.setCoordinate(coordinates)
+            dispatch_async(dispatch_get_main_queue(), {
+                self.annotationToAdd!.setCoordinates(coordinates)
+            })
         }
         
         if gestureRec.state == .Ended {
             
             // http://www.myswiftjourney.me/2014/10/23/using-mapkit-mkmapview-how-to-create-a-annotation/ thanks for help
-            annotationToAdd!.setCoordinate(coordinates)
+            dispatch_async(dispatch_get_main_queue(), {
+                self.annotationToAdd!.setCoordinates(coordinates)
             
-            let pin = Pin(coordinates: coordinates, context: sharedContext)
-            CoreDataStackManager.sharedInstance().saveContext()
-                
-            if pin.photos?.count == 0 { // no photos downloaded yet
-                ApiClient.retrievePhotos(coordinates, pin: pin, context: sharedContext)
-            }
+                let pin = Pin(coordinates: coordinates, context: self.sharedContext)
+                CoreDataStackManager.sharedInstance().saveContext()
+            
+            
+                if pin.photos?.count == 0 { // no photos downloaded yet
+                    ApiClient.retrievePhotos(coordinates, pin: pin, context: self.sharedContext)
+                }
+            })
             
         }
     }
@@ -90,14 +97,17 @@ class TravelLocationsViewController: UIViewController, UIGestureRecognizerDelega
         else {
             pinView!.annotation = annotation
         }
-        
+
         return pinView
     }
 
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         
-        let coordinates = (mapView.selectedAnnotations[0] as! DraggableAnnotation).coordinate
+        let annotation = mapView.selectedAnnotations[0]
+        mapView.deselectAnnotation(annotation, animated: true)
+        
+        let coordinates = (annotation as! DraggableAnnotation).coordinate
         let pin = CoreDataLookup.retrieveClickedPin(coordinates, context: sharedContext)
         
         PhotosCollectionViewController.pinTapped = pin
