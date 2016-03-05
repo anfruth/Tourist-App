@@ -20,6 +20,17 @@ class Photo : NSManagedObject {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
     
+    override func prepareForDeletion() {
+        super.prepareForDeletion()
+        if imagePath != nil {
+            do {
+                try NSFileManager.defaultManager().removeItemAtPath(imagePath! + ".jpg")
+            } catch {
+                print("Failed to remove file from documents folder")
+            }
+        }
+    }
+    
     init(flickrPhoto: UIImage?, context: NSManagedObjectContext) {
         
         let entity =  NSEntityDescription.entityForName("Photo", inManagedObjectContext: context)!
